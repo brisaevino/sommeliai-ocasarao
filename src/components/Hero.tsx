@@ -382,8 +382,8 @@ export default function Hero() {
             Em apenas 3 passos simples, você encontra o vinho ideal para qualquer ocasião
           </p>
           
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8 items-center">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
               {/* Etapa 1 */}
               <div className="text-center group">
                 <div className="relative mb-6">
@@ -408,7 +408,7 @@ export default function Hero() {
 
               {/* Seta 1 → 2 */}
               <div className="hidden md:flex justify-center">
-                <div className="text-3xl animate-pulse" style={{ color: '#d9a441' }}>
+                <div className="text-4xl animate-pulse" style={{ color: '#d9a441' }}>
                   →
                 </div>
               </div>
@@ -437,7 +437,7 @@ export default function Hero() {
 
               {/* Seta 2 → 3 */}
               <div className="hidden md:flex justify-center">
-                <div className="text-3xl animate-pulse" style={{ color: '#d9a441' }}>
+                <div className="text-4xl animate-pulse" style={{ color: '#d9a441' }}>
                   →
                 </div>
               </div>
