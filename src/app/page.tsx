@@ -8,11 +8,8 @@ export default function Home() {
     <div className="min-h-screen bg-primary">
       <Header />
       <AnuncieBar />
-      <ErrorBoundary>
-        <Hero />
-      </ErrorBoundary>
+      <Hero />
       <Footer />
-      <TestAPI />
     </div>
   );
 }
