@@ -372,6 +372,82 @@ export default function Hero() {
             </button>
           </div>
         </div>
+
+        {/* Como Funciona - 4 Etapas */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold mb-12" style={{ color: '#7a2e1e' }}>
+            Como funciona?
+          </h2>
+          <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            {/* Etapa 1 */}
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
+                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+                color: 'white',
+                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
+              }}>
+                1
+              </div>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
+                Conte suas preferências
+              </h3>
+              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                Descreva o que você procura: ocasião, prato, orçamento ou dúvidas entre vinhos
+              </p>
+            </div>
+
+            {/* Etapa 2 */}
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
+                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+                color: 'white',
+                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
+              }}>
+                2
+              </div>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
+                IA analisa e entende
+              </h3>
+              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                Nossa inteligência artificial processa suas informações com conhecimento especializado
+              </p>
+            </div>
+
+            {/* Etapa 3 */}
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
+                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+                color: 'white',
+                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
+              }}>
+                3
+              </div>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
+                Receba recomendações
+              </h3>
+              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                Sugestões personalizadas com harmonizações, faixas de preço e onde encontrar
+              </p>
+            </div>
+
+            {/* Etapa 4 */}
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
+                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+                color: 'white',
+                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
+              }}>
+                4
+              </div>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
+                Aproveite sua escolha
+              </h3>
+              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                Desfrute do vinho perfeito para o seu momento com total confiança
+              </p>
+            </div>
+          </div>
+        </div>
         
         {/* Trust Metrics Section - OS 3 QUADRADOS */}
         <div className="mb-16">
@@ -408,10 +484,15 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Seção Integrada - Newsletter e Patrocínio */}
+        {/* Newsletter - Agora separado */}
+        <div className="mb-12">
+          <NewsletterForm />
+        </div>
+
+        {/* Patrocínio - Agora apenas anúncios */}
         <div className="mt-16 relative">
-          <div className="max-w-6xl mx-auto">
-            <div className="relative overflow-hidden p-12 rounded-3xl border-2 transition-all duration-500 shadow-lg" 
+          <div className="max-w-4xl mx-auto">
+            <div className="relative overflow-hidden p-12 rounded-3xl border-2 transition-all duration-500 shadow-lg text-center" 
                  style={{ 
                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 245, 0.9) 100%)', 
                    borderColor: '#d9a441',
@@ -419,26 +500,7 @@ export default function Hero() {
                  }}>
               <div className="absolute inset-0 bg-gradient-to-br from-amber-100/30 to-orange-100/30 opacity-100"></div>
               
-              {/* Newsletter Section */}
-              <div className="relative z-10 mb-12">
-                <NewsletterForm />
-              </div>
-              
-              {/* Divisor sutil */}
-              <div className="relative z-10 mb-12">
-                <div className="flex items-center justify-center">
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent"></div>
-                  <div className="mx-6 flex space-x-2">
-                    <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="w-2 h-2 bg-amber-600 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  </div>
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent"></div>
-                </div>
-              </div>
-              
-              {/* Patrocínio Section */}
-              <div className="relative z-10 text-center">
+              <div className="relative z-10">
                 <div className="flex items-center justify-center mb-6">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mr-4" 
                        style={{ background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)', color: 'white' }}>
