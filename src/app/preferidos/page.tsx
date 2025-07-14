@@ -34,34 +34,34 @@ A melhor parte? Você encontra na maioria dos supermercados! Não precisa procur
   },
   {
     id: 2,
-    titulo: "Noite de massas com Alamos Cabernet Sauvignon 🍝",
+    titulo: "Noite italiana com Chianti San Crispino 🇮🇹",
     data: "12 de Janeiro, 2025",
-    imagem: "https://cdn.shopify.com/s/files/1/0551/9241/0843/products/alamos-cabernet-sauvignon_750ml.jpg?v=1679948123",
-    imagemPerfil: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-    autor: "Marco Vinhedo",
+    imagem: "/jantar-gaby.jpg",
+    imagemPerfil: "/gaby.jpeg",
+    autor: "Gaby Fernandes",
     categoria: "Harmonização",
-    tags: ["Tinto", "Argentino", "Encorpado", "Massas"],
-    preco: "R$ 129,90",
-    linkCompra: "https://www.wine.com.br/alamos-cabernet-sauvignon",
-    conteudo: `Pessoal, hoje foi dia de testar uma harmonização clássica: massa + tinto argentino! 🇦🇷
+    tags: ["Tinto", "Italiano", "Chianti", "Queijos"],
+    preco: "R$ 89,90",
+    linkCompra: "https://amzn.to/4ltBKnD",
+    conteudo: `Pessoal, hoje foi dia de testar uma harmonização clássica italiana: burrata cremosa + tomates frescos + Chianti San Crispino! 🇮🇹
 
-O Alamos Cabernet Sauvignon é um vinho que eu sempre recomendo para quem está começando no mundo dos tintos encorpados.
+O Chianti é um vinho que eu sempre recomendo para quem quer começar a entender a elegância dos tintos italianos.
 
 **O que testei:**
-- Lasanha à bolonhesa
-- Penne ao molho de tomate com linguiça
-- Gnocchi ao molho pomodoro
+- Burrata fresca com tomates cereja
+- Bruschetta de tomate com manjericão
+- Burrata com tomates secos e azeite
 
 **Resultado:**
-PERFEITO em todas! A acidez do vinho cortou a gordura da linguiça, os taninos equilibraram com o molho de tomate, e aquele sabor frutado complementou lindamente a massa.
+PERFEITO em todas! A acidez natural do Chianti cortou perfeitamente a cremosidade da burrata, os taninos sedosos equilibraram com a doçura dos tomates, e aquelas notas de cereja italiana complementaram lindamente a combinação.
 
 **Características do vinho:**
-- Cor rubi intensa
-- Aroma de frutas vermelhas (cereja, amora)
-- Taninos presentes mas não agressivos
-- Final longo e prazeroso
+- Cor rubi brilhante típica da Toscana
+- Aroma de cerejas frescas e especiarias
+- Taninos elegantes e bem integrados
+- Final persistente com toque de ervas
 
-**Para iniciantes:** Se você tem medo de vinho tinto porque acha amargo, esse aqui é IDEAL para começar. Encorpado mas suave, complexo mas acessível.`
+**Para iniciantes:** Se você tem medo de vinho tinto porque acha amargo, o Chianti San Crispino é IDEAL para começar. Estruturado mas suave, autêntico mas acessível - a porta de entrada perfeita para os vinhos italianos!`
   },
   {
     id: 3,
