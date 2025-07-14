@@ -373,78 +373,96 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Como Funciona - 4 Etapas */}
+        {/* Como Funciona - 3 Etapas com Setas */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-12" style={{ color: '#7a2e1e' }}>
+          <h2 className="text-3xl font-bold mb-4" style={{ color: '#7a2e1e' }}>
             Como funciona?
           </h2>
-          <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            {/* Etapa 1 */}
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
-                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
-                color: 'white',
-                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
-              }}>
-                1
+          <p className="text-lg mb-12 max-w-2xl mx-auto" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+            Em apenas 3 passos simples, você encontra o vinho ideal para qualquer ocasião
+          </p>
+          
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 items-center">
+              {/* Etapa 1 */}
+              <div className="text-center group">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-2xl font-bold transition-all group-hover:scale-110" style={{
+                    background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+                    color: 'white',
+                    boxShadow: '0 8px 25px rgba(217, 164, 65, 0.3)'
+                  }}>
+                    1
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                    ✓
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold mb-3" style={{ color: '#7a2e1e' }}>
+                  Conte suas preferências
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                  Descreva o que você procura: ocasião, prato, orçamento ou dúvidas entre vinhos
+                </p>
               </div>
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
-                Conte suas preferências
-              </h3>
-              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
-                Descreva o que você procura: ocasião, prato, orçamento ou dúvidas entre vinhos
-              </p>
-            </div>
 
-            {/* Etapa 2 */}
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
-                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
-                color: 'white',
-                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
-              }}>
-                2
+              {/* Seta 1 → 2 */}
+              <div className="hidden md:flex justify-center">
+                <div className="text-3xl animate-pulse" style={{ color: '#d9a441' }}>
+                  →
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
-                IA analisa e entende
-              </h3>
-              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
-                Nossa inteligência artificial processa suas informações com conhecimento especializado
-              </p>
-            </div>
 
-            {/* Etapa 3 */}
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
-                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
-                color: 'white',
-                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
-              }}>
-                3
+              {/* Etapa 2 */}
+              <div className="text-center group">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-2xl font-bold transition-all group-hover:scale-110" style={{
+                    background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+                    color: 'white',
+                    boxShadow: '0 8px 25px rgba(217, 164, 65, 0.3)'
+                  }}>
+                    2
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                    🤖
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold mb-3" style={{ color: '#7a2e1e' }}>
+                  IA analisa e recomenda
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                  Nossa inteligência artificial processa suas informações e gera sugestões personalizadas
+                </p>
               </div>
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
-                Receba recomendações
-              </h3>
-              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
-                Sugestões personalizadas com harmonizações, faixas de preço e onde encontrar
-              </p>
-            </div>
 
-            {/* Etapa 4 */}
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{
-                background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
-                color: 'white',
-                boxShadow: '0 4px 12px rgba(217, 164, 65, 0.3)'
-              }}>
-                4
+              {/* Seta 2 → 3 */}
+              <div className="hidden md:flex justify-center">
+                <div className="text-3xl animate-pulse" style={{ color: '#d9a441' }}>
+                  →
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
-                Aproveite sua escolha
-              </h3>
-              <p className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
-                Desfrute do vinho perfeito para o seu momento com total confiança
-              </p>
+
+              {/* Etapa 3 */}
+              <div className="text-center group">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-2xl font-bold transition-all group-hover:scale-110" style={{
+                    background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+                    color: 'white',
+                    boxShadow: '0 8px 25px rgba(217, 164, 65, 0.3)'
+                  }}>
+                    3
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                    🍷
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold mb-3" style={{ color: '#7a2e1e' }}>
+                  Desfrute sua escolha
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                  Receba recomendações completas com harmonizações e onde encontrar o vinho ideal
+                </p>
+              </div>
             </div>
           </div>
         </div>
