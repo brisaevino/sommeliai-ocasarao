@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { useSearchParams } from 'next/navigation';
 import NewsletterForm from "./NewsletterForm";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { systemPrompt } from "../lib/prompt";
 
 export default function Hero() {
+  const searchParams = useSearchParams();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
@@ -21,6 +23,13 @@ export default function Hero() {
   const [showChat, setShowChat] = useState(false);
   const [userEmojis, setUserEmojis] = useState<{[key: number]: string}>({});
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // ADICIONADO: Verificar se deve abrir chat automaticamente
+  useEffect(() => {
+    if (searchParams.get('chat') === 'true') {
+      setShowChat(true);
+    }
+  }, [searchParams]);
 
   // Array de emojis variados para o usuário
   const availableEmojis = ["😊", "😄", "🙂", "😎", "🤗", "😌", "🤔", "😉", "🥰", "😋", "🤩", "😇", "🙃", "😌", "😘"];

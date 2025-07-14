@@ -31,14 +31,17 @@ export default function Header() {
         }}>
           <span className="button-text">QUIZ DE PERSONALIDADE</span>
         </button>
-        <button className="button modern-button primary-button" onClick={() => {
-          const chatSection = document.querySelector('.hero');
-          if (chatSection) {
-            chatSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        }}>
-          <span className="button-text">Teste o chat!</span>
-        </button>
+        <a
+          href="/?chat=true"
+          className="px-4 py-2 text-sm font-medium rounded-full transition-all hover:scale-105"
+          style={{
+            background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
+            color: 'white',
+            boxShadow: '0 2px 8px rgba(217, 164, 65, 0.3)'
+          }}
+        >
+          Teste o chat
+        </a>
       </div>
     </header>
   );
