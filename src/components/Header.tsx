@@ -1,4 +1,6 @@
 "use client";
+import Link from 'next/link';
+
 export default function Header() {
   return (
     <header className="header" style={{ marginBottom: 0, borderRadius: "0 0 0 0", position: 'relative' }}>
@@ -31,17 +33,19 @@ export default function Header() {
         }}>
           <span className="button-text">QUIZ DE PERSONALIDADE</span>
         </button>
-        <a
+        <Link
           href="/?chat=true"
           className="px-4 py-2 text-sm font-medium rounded-full transition-all hover:scale-105"
           style={{
             background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
             color: 'white',
-            boxShadow: '0 2px 8px rgba(217, 164, 65, 0.3)'
+            boxShadow: '0 2px 8px rgba(217, 164, 65, 0.3)',
+            textDecoration: 'none',
+            display: 'inline-block'
           }}
         >
           Teste o chat
-        </a>
+        </Link>
       </div>
     </header>
   );

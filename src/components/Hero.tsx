@@ -1,12 +1,13 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from 'next/navigation';
 import NewsletterForm from "./NewsletterForm";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { systemPrompt } from "../lib/prompt";
 
-export default function Hero() {
+// Componente separado para usar useSearchParams
+function HeroWithSearchParams() {
   const searchParams = useSearchParams();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
@@ -24,7 +25,7 @@ export default function Hero() {
   const [userEmojis, setUserEmojis] = useState<{[key: number]: string}>({});
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
-  // ADICIONADO: Verificar se deve abrir chat automaticamente
+  // Verificar se deve abrir chat automaticamente
   useEffect(() => {
     if (searchParams.get('chat') === 'true') {
       setShowChat(true);
@@ -236,31 +237,11 @@ export default function Hero() {
                           </table>
                         </div>
                       ),
-                      thead: ({ children }) => (
-                        <thead>
-                          {children}
-                        </thead>
-                      ),
-                      tbody: ({ children }) => (
-                        <tbody>
-                          {children}
-                        </tbody>
-                      ),
-                      th: ({ children }) => (
-                        <th>
-                          {children}
-                        </th>
-                      ),
-                      td: ({ children }) => (
-                        <td>
-                          {children}
-                        </td>
-                      ),
-                      tr: ({ children }) => (
-                        <tr>
-                          {children}
-                        </tr>
-                      )
+                      thead: ({ children }) => <thead>{children}</thead>,
+                      tbody: ({ children }) => <tbody>{children}</tbody>,
+                      th: ({ children }) => <th>{children}</th>,
+                      td: ({ children }) => <td>{children}</td>,
+                      tr: ({ children }) => <tr>{children}</tr>
                     }}
                   >
                     {msg.content.trim()}
@@ -323,14 +304,6 @@ export default function Hero() {
                 color: '#7a2e1e',
                 boxShadow: '0 4px 12px rgba(217, 164, 65, 0.1)'
               }}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#d9a441';
-                e.target.style.boxShadow = '0 4px 16px rgba(217, 164, 65, 0.2)';
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(217, 164, 65, 0.3)';
-                e.target.style.boxShadow = '0 4px 12px rgba(217, 164, 65, 0.1)';
-              }}
             />
             <button 
               type="submit" 
@@ -382,8 +355,21 @@ export default function Hero() {
           </div>
         </div>
 
+        {/* SEPARADOR ELEGANTE */}
+        <div className="mb-20">
+          <div className="flex items-center justify-center">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent max-w-lg"></div>
+            <div className="mx-8 flex items-center space-x-3">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#d9a441' }}></div>
+              <span className="text-sm font-medium" style={{ color: '#d9a441' }}>🍷</span>
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#d9a441' }}></div>
+            </div>
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent max-w-lg"></div>
+          </div>
+        </div>
+
         {/* Como Funciona - 3 Etapas com Setas */}
-        <div className="mb-16">
+        <div className="mb-20">
           <h2 className="text-3xl font-bold mb-4" style={{ color: '#7a2e1e' }}>
             Como funciona?
           </h2>
@@ -477,42 +463,66 @@ export default function Hero() {
         </div>
         
         {/* Trust Metrics Section - OS 3 QUADRADOS */}
-        <div className="mb-16">
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center p-6 rounded-xl" style={{
+        <div className="mb-20">
+          <h2 className="text-2xl font-bold mb-8" style={{ color: '#7a2e1e' }}>
+            Confie em quem já descobriu
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="group text-center p-8 rounded-2xl transition-all hover:scale-105 hover:shadow-xl" style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 245, 0.9) 100%)',
-              border: '1px solid rgba(217, 164, 65, 0.2)',
-              boxShadow: '0 4px 20px rgba(122, 46, 30, 0.08)'
+              border: '2px solid rgba(217, 164, 65, 0.2)',
+              boxShadow: '0 8px 30px rgba(122, 46, 30, 0.08)'
             }}>
-              <div className="text-3xl font-bold mb-2" style={{ color: '#d9a441' }}>200+</div>
-              <div className="text-lg font-medium mb-1" style={{ color: '#7a2e1e' }}>Pessoas encontraram</div>
-              <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>o vinho perfeito</div>
+              <div className="text-4xl font-bold mb-3 transition-colors group-hover:scale-110" style={{ color: '#d9a441' }}>
+                200+
+              </div>
+              <div className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
+                Pessoas encontraram
+              </div>
+              <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                o vinho perfeito
+              </div>
+              <div className="mt-4 w-12 h-1 mx-auto rounded-full transition-all group-hover:w-16" style={{ backgroundColor: '#d9a441' }}></div>
             </div>
             
-            <div className="text-center p-6 rounded-xl" style={{
+            <div className="group text-center p-8 rounded-2xl transition-all hover:scale-105 hover:shadow-xl" style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 245, 0.9) 100%)',
-              border: '1px solid rgba(217, 164, 65, 0.2)',
-              boxShadow: '0 4px 20px rgba(122, 46, 30, 0.08)'
+              border: '2px solid rgba(217, 164, 65, 0.2)',
+              boxShadow: '0 8px 30px rgba(122, 46, 30, 0.08)'
             }}>
-              <div className="text-3xl font-bold mb-2" style={{ color: '#d9a441' }}>24/7</div>
-              <div className="text-lg font-medium mb-1" style={{ color: '#7a2e1e' }}>Sempre online</div>
-              <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>a seu dispor</div>
+              <div className="text-4xl font-bold mb-3 transition-colors group-hover:scale-110" style={{ color: '#d9a441' }}>
+                24/7
+              </div>
+              <div className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
+                Sempre online
+              </div>
+              <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                a seu dispor
+              </div>
+              <div className="mt-4 w-12 h-1 mx-auto rounded-full transition-all group-hover:w-16" style={{ backgroundColor: '#d9a441' }}></div>
             </div>
             
-            <div className="text-center p-6 rounded-xl" style={{
+            <div className="group text-center p-8 rounded-2xl transition-all hover:scale-105 hover:shadow-xl" style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 245, 0.9) 100%)',
-              border: '1px solid rgba(217, 164, 65, 0.2)',
-              boxShadow: '0 4px 20px rgba(122, 46, 30, 0.08)'
+              border: '2px solid rgba(217, 164, 65, 0.2)',
+              boxShadow: '0 8px 30px rgba(122, 46, 30, 0.08)'
             }}>
-              <div className="text-3xl font-bold mb-2" style={{ color: '#d9a441' }}>100%</div>
-              <div className="text-lg font-medium mb-1" style={{ color: '#7a2e1e' }}>Personalizado</div>
-              <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>para seu gosto</div>
+              <div className="text-4xl font-bold mb-3 transition-colors group-hover:scale-110" style={{ color: '#d9a441' }}>
+                100%
+              </div>
+              <div className="text-lg font-semibold mb-2" style={{ color: '#7a2e1e' }}>
+                Personalizado
+              </div>
+              <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>
+                para seu gosto
+              </div>
+              <div className="mt-4 w-12 h-1 mx-auto rounded-full transition-all group-hover:w-16" style={{ backgroundColor: '#d9a441' }}></div>
             </div>
           </div>
         </div>
 
-        {/* Newsletter - Agora separado */}
-        <div className="mb-12">
+        {/* Newsletter - Seção separada */}
+        <div className="mb-16">
           <NewsletterForm />
         </div>
 
@@ -551,5 +561,21 @@ export default function Hero() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Componente principal exportado com Suspense
+export default function Hero() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f3edea' }}>
+        <div className="text-center">
+          <div className="text-2xl font-bold mb-4" style={{ color: '#7a2e1e' }}>SommeliAI</div>
+          <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>Carregando...</div>
+        </div>
+      </div>
+    }>
+      <HeroWithSearchParams />
+    </Suspense>
   );
 }
