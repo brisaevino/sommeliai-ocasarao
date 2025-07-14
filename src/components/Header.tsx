@@ -17,20 +17,26 @@ export default function Header() {
         </h1>
       </div>
       <p>Seu sommelier de bolso inteligente</p>
-      <div className="header-buttons">
+      <div className="header-buttons" style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        alignItems: 'center',
+        width: '100%'
+      }}>
         <button className="button modern-button" onClick={() => {
           window.location.href = '/';
-        }}>
+        }} style={{ width: '100%', maxWidth: '280px' }}>
           <span className="button-text">Página Inicial</span>
         </button>
         <button className="button modern-button" onClick={() => {
           window.location.href = '/preferidos';
-        }}>
+        }} style={{ width: '100%', maxWidth: '280px' }}>
           <span className="button-text">Nossos Preferidos</span>
         </button>
         <button className="button modern-button" onClick={() => {
           window.location.href = '/quiz';
-        }}>
+        }} style={{ width: '100%', maxWidth: '280px' }}>
           <span className="button-text">QUIZ DE PERSONALIDADE</span>
         </button>
         {/* Botão "Teste o chat" com estilo amarelo/dourado especial */}
@@ -43,9 +49,11 @@ export default function Header() {
             boxShadow: '0 2px 8px rgba(217, 164, 65, 0.3)',
             textDecoration: 'none',
             minHeight: '40px',
-            display: 'flex', // Removido o display duplicado
+            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            width: '100%',
+            maxWidth: '280px'
           }}
         >
           Teste o chat
