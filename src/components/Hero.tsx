@@ -507,42 +507,32 @@ export default function Hero() {
           <NewsletterForm />
         </div>
 
-        {/* Patrocínio - Agora apenas anúncios */}
-        <div className="mt-16 relative">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative overflow-hidden p-12 rounded-3xl border-2 transition-all duration-500 shadow-lg text-center" 
+        {/* Patrocínio - MAIS DISCRETO */}
+        <div className="mt-16">
+          <div className="max-w-2xl mx-auto">
+            <div className="relative overflow-hidden p-6 rounded-2xl border transition-all duration-300 hover:shadow-md" 
                  style={{ 
-                   background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 245, 0.9) 100%)', 
-                   borderColor: '#d9a441',
+                   background: 'rgba(255, 255, 255, 0.7)', 
+                   borderColor: 'rgba(217, 164, 65, 0.2)',
                    backdropFilter: 'blur(10px)'
                  }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-100/30 to-orange-100/30 opacity-100"></div>
               
-              <div className="relative z-10">
-                <div className="flex items-center justify-center mb-6">
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mr-4" 
-                       style={{ background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)', color: 'white' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
-                      <path d="M12 11h4"/>
-                      <path d="M12 16h4"/>
-                      <path d="M8 11h.01"/>
-                      <path d="M8 16h.01"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-2xl mb-2" style={{ color: '#d9a441' }}>Anuncie aqui</h3>
-                    <p className="text-base leading-relaxed max-w-2xl" style={{ color: '#7a2e1e' }}>
-                      Alcance milhares de apreciadores de vinho e expanda sua marca no mercado enológico
-                    </p>
-                  </div>
+              <div className="text-center">
+                <div className="mb-3">
+                  <h3 className="font-semibold text-lg" style={{ color: '#7a2e1e' }}>Espaço publicitário</h3>
                 </div>
+                <p className="text-sm mb-4 max-w-md mx-auto" style={{ color: 'rgba(122, 46, 30, 0.6)' }}>
+                  Alcance apreciadores de vinho com sua marca
+                </p>
                 
                 <a
                   href="mailto:brisaevino@gmail.com?subject=Interesse em anunciar no SommeliAI&body=Olá! Gostaria de saber mais sobre as oportunidades de anúncio no SommeliAI."
-                  className="inline-block font-semibold text-lg px-8 py-4 rounded-full hover:scale-105 transition-all shadow-lg"
-                  style={{ background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)', color: 'white' }}
+                  className="inline-block text-sm font-medium px-6 py-2.5 rounded-full transition-all hover:scale-105"
+                  style={{ 
+                    background: 'rgba(217, 164, 65, 0.1)', 
+                    color: '#d9a441',
+                    border: '1px solid rgba(217, 164, 65, 0.3)'
+                  }}
                 >
                   Entre em contato
                 </a>
