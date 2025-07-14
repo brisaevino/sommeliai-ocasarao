@@ -23,6 +23,7 @@ function HeroWithSearchParams() {
   const [loading, setLoading] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [userEmojis, setUserEmojis] = useState<{[key: number]: string}>({});
+  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Verificar se deve abrir chat automaticamente
@@ -38,6 +39,35 @@ function HeroWithSearchParams() {
   // Função para pegar um emoji aleatório
   const getRandomEmoji = () => {
     return availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
+  };
+
+  // 📤 Função para enviar dados para Google Apps Script
+  const sendToWebhook = async (userMessage: string, assistantResponse: string) => {
+    try {
+      const webhookData = {
+        sessionId,
+        timestamp: new Date().toISOString(),
+        pergunta: userMessage,
+        resposta: assistantResponse,
+        userAgent: navigator.userAgent,
+        url: window.location.href
+      };
+
+      console.log('📤 Enviando para webhook:', webhookData);
+
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzkCHa5FgdbahGdg-Hr_RYfHglpLEQJW4Lb-GjnIOn8DGWAZQZ6heI1BfGQwg2f73_0/exec', {
+        method: 'POST',
+        mode: 'no-cors', // Necessário para Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData)
+      });
+
+      console.log('✅ Conversa enviada para Google Sheets');
+    } catch (error) {
+      console.error('❌ Erro ao enviar para webhook:', error);
+    }
   };
 
   async function handleSubmit(e: React.FormEvent) {
@@ -68,17 +98,28 @@ function HeroWithSearchParams() {
       });
 
       const data = await res.json();
+      const assistantResponse = data.answer || `Erro: ${data.error || "Erro ao obter resposta."}`;
+      
       const assistantMsg = {
         role: "assistant",
-        content: data.answer || `Erro: ${data.error || "Erro ao obter resposta."}`,
+        content: assistantResponse,
       };
 
-      setMessages([...newMessages, assistantMsg]);
-    } catch {
-      setMessages([
-        ...newMessages,
-        { role: "assistant", content: "Erro ao conectar à API." },
-      ]);
+      const finalMessages = [...newMessages, assistantMsg];
+      setMessages(finalMessages);
+
+      // 📤 Enviar pergunta e resposta para o webhook
+      await sendToWebhook(trimmed, assistantResponse);
+
+    } catch (error) {
+      const errorMsg = "Erro ao conectar à API.";
+      const assistantMsg = { role: "assistant", content: errorMsg };
+      
+      const finalMessages = [...newMessages, assistantMsg];
+      setMessages(finalMessages);
+      
+      // 📤 Enviar também em caso de erro
+      await sendToWebhook(trimmed, errorMsg);
     } finally {
       setLoading(false);
     }
@@ -95,7 +136,7 @@ function HeroWithSearchParams() {
   };
 
   const restartChat = () => {
-    setMessages([
+    const newMessages = [
       {
         role: "assistant",
         content: `Oi de novo! 🍇 Qual vinho combina com seu momento hoje?
@@ -104,7 +145,8 @@ function HeroWithSearchParams() {
 2. Quero uma sugestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
       },
-    ]);
+    ];
+    setMessages(newMessages);
     setShowChat(true);
   };
 
@@ -183,9 +225,7 @@ function HeroWithSearchParams() {
               className={`flex items-start mb-6 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
             >
               {/* Avatar */}
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl mx-4 flex-shrink-0 overflow-hidden ${
-                msg.role === "user" ? "" : ""
-              }`}
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl mx-4 flex-shrink-0 overflow-hidden`}
               style={msg.role === "user"
                 ? {
                     background: 'linear-gradient(135deg, #7a2e1e 0%, #5d1f14 100%)',
