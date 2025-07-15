@@ -138,7 +138,6 @@ function HeroWithSearchParams() {
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     
-    // Atribuir um emoji aleatório para esta mensagem do usuário
     setUserEmojis(prev => ({
       ...prev,
       [messageIndex]: getRandomEmoji()
@@ -154,6 +153,8 @@ function HeroWithSearchParams() {
     });
 
     try {
+      console.log('🚀 Enviando pergunta para API:', trimmed); // ✅ LOG ADICIONADO
+
       const res = await fetch("/api/chatgpt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -163,6 +164,8 @@ function HeroWithSearchParams() {
       });
 
       const data = await res.json();
+      console.log('📥 Resposta da API recebida:', data); // ✅ LOG ADICIONADO
+      
       const assistantResponse = data.answer || `Erro: ${data.error || "Erro ao obter resposta."}`;
       
       const assistantMsg: ChatMessage = {
@@ -174,19 +177,24 @@ function HeroWithSearchParams() {
       const finalMessages = [...newMessages, assistantMsg];
       setMessages(finalMessages);
 
+      console.log('📤 Enviando para webhook:', { 
+        pergunta: trimmed, 
+        resposta: assistantResponse 
+      }); // ✅ LOG ADICIONADO
+
+      // 📤 Enviar pergunta e resposta APÓS receber a resposta
+      await sendToWebhook(trimmed, assistantResponse);
+
       // 📊 Analytics: IA respondeu
       await trackEvent('assistant_response_received', { 
         responseLength: assistantResponse.length,
-        messageNumber: finalMessages.filter(m => m.role === 'assistant').length - 1, // -1 para excluir mensagem inicial
+        messageNumber: finalMessages.filter(m => m.role === 'assistant').length - 1,
         isError: assistantResponse.includes('Erro:')
       });
 
-      // 📤 Enviar conversa atualizada (só a cada 3 mensagens para não spammar)
-      if (finalMessages.length % 3 === 0) {
-        await sendConversationToWebhook(finalMessages, 'conversation_milestone');
-      }
-
     } catch (error) {
+      console.error('❌ Erro na API:', error); // ✅ LOG ADICIONADO
+      
       const errorMsg = "Erro ao conectar à API.";
       const assistantMsg: ChatMessage = { 
         role: "assistant", 
@@ -197,7 +205,9 @@ function HeroWithSearchParams() {
       const finalMessages = [...newMessages, assistantMsg];
       setMessages(finalMessages);
       
-      // 📊 Analytics: Erro na API - CORRIGIDO
+      // 📤 Enviar erro também
+      await sendToWebhook(trimmed, errorMsg);
+      
       await trackEvent('api_error', { 
         error: error instanceof Error ? error.message : String(error),
         errorType: error instanceof Error ? error.name : 'unknown'
@@ -206,6 +216,35 @@ function HeroWithSearchParams() {
       setLoading(false);
     }
   }
+
+  // 📤 Função simplificada para enviar só pergunta e resposta
+  const sendToWebhook = async (userMessage: string, assistantResponse: string) => {
+    try {
+      const webhookData = {
+        sessionId,
+        timestamp: new Date().toISOString(),
+        pergunta: userMessage,
+        resposta: assistantResponse,
+        userAgent: navigator.userAgent,
+        url: window.location.href
+      };
+
+      console.log('📤 Dados sendo enviados para webhook:', webhookData); // ✅ LOG ADICIONADO
+
+      const response = await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData)
+      });
+
+      console.log('✅ Webhook enviado com sucesso'); // ✅ LOG ADICIONADO
+    } catch (error) {
+      console.error('❌ Erro ao enviar webhook:', error); // ✅ LOG ADICIONADO
+    }
+  };
 
   useEffect(() => {
     if (chatContainerRef.current) {
