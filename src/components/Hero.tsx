@@ -6,30 +6,52 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { systemPrompt } from "../lib/prompt";
 
+// 📝 Definir tipos específicos
+interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+  timestamp: string;
+}
+
+interface AnalyticsEvent {
+  sessionId: string;
+  eventType: string;
+  timestamp: string;
+  userAgent: string;
+  url: string;
+  [key: string]: string | number | boolean;
+}
+
 // Componente separado para usar useSearchParams
 function HeroWithSearchParams() {
   const searchParams = useSearchParams();
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content: `Olá! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
+  const [messages, setMessages] = useState<ChatMessage[]>(
+    [
+      {
+        role: "assistant",
+        content: `Olá! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
 
 1. Tô em dúvida entre dois vinhos
 2. Quero uma sugestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
-    },
-  ]);
+        timestamp: new Date().toISOString()
+      },
+    ]
+  );
   const [loading, setLoading] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [userEmojis, setUserEmojis] = useState<{[key: number]: string}>({});
   const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const [sessionStartTime] = useState(() => new Date().toISOString());
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Verificar se deve abrir chat automaticamente
   useEffect(() => {
     if (searchParams.get('chat') === 'true') {
       setShowChat(true);
+      // 📊 Analytics: Chat aberto via URL
+      trackEvent('chat_opened', { source: 'url_parameter' });
     }
   }, [searchParams]);
 
@@ -41,32 +63,63 @@ function HeroWithSearchParams() {
     return availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
   };
 
-  // 📤 Função para enviar dados para Google Apps Script
-  const sendToWebhook = async (userMessage: string, assistantResponse: string) => {
+  // 📊 Função para rastrear eventos - CORRIGIDO
+  const trackEvent = async (eventType: string, data: Record<string, string | number | boolean> = {}) => {
     try {
-      const webhookData = {
+      const eventData: AnalyticsEvent = {
         sessionId,
+        eventType,
         timestamp: new Date().toISOString(),
-        pergunta: userMessage,
-        resposta: assistantResponse,
+        ...data,
         userAgent: navigator.userAgent,
         url: window.location.href
       };
 
-      console.log('📤 Enviando para webhook:', webhookData);
-
-      const response = await fetch('https://script.google.com/macros/s/AKfycbzkCHa5FgdbahGdg-Hr_RYfHglpLEQJW4Lb-GjnIOn8DGWAZQZ6heI1BfGQwg2f73_0/exec', {
+      console.log('📊 Analytics Event:', eventType, eventData);
+      
+      // Enviar evento para Google Apps Script
+      await fetch('https://script.google.com/macros/s/AKfycbzkCHa5FgdbahGdg-Hr_RYfHglpLEQJW4Lb-GjnIOn8DGWAZQZ6heI1BfGQwg2f73_0/exec', {
         method: 'POST',
-        mode: 'no-cors', // Necessário para Google Apps Script
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(webhookData)
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventData)
+      });
+    } catch (error) {
+      console.error('❌ Erro no analytics:', error);
+    }
+  };
+
+  // 📤 Função para enviar conversa completa - CORRIGIDO
+  const sendConversationToWebhook = async (conversationMessages: ChatMessage[], eventType: string = 'conversation_update') => {
+    try {
+      const conversationSummary = {
+        sessionId,
+        eventType,
+        sessionStartTime,
+        timestamp: new Date().toISOString(),
+        totalMessages: conversationMessages.length,
+        userMessages: conversationMessages.filter(m => m.role === 'user').length,
+        assistantMessages: conversationMessages.filter(m => m.role === 'assistant').length,
+        sessionDuration: Date.now() - new Date(sessionStartTime).getTime(),
+        lastUserMessage: conversationMessages.filter(m => m.role === 'user').pop()?.content || '',
+        lastAssistantMessage: conversationMessages.filter(m => m.role === 'assistant').pop()?.content || '',
+        userAgent: navigator.userAgent,
+        url: window.location.href,
+        fullConversation: conversationMessages
+      };
+
+      console.log('📤 Enviando conversa completa:', conversationSummary);
+
+      await fetch('https://script.google.com/macros/s/AKfycbzkCHa5FgdbahGdg-Hr_RYfHglpLEQJW4Lb-GjnIOn8DGWAZQZ6heI1BfGQwg2f73_0/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(conversationSummary)
       });
 
-      console.log('✅ Conversa enviada para Google Sheets');
+      console.log('✅ Conversa enviada para analytics');
     } catch (error) {
-      console.error('❌ Erro ao enviar para webhook:', error);
+      console.error('❌ Erro ao enviar conversa:', error);
     }
   };
 
@@ -76,7 +129,12 @@ function HeroWithSearchParams() {
     if (!trimmed) return;
 
     const messageIndex = messages.length;
-    const newMessages = [...messages, { role: "user", content: trimmed }];
+    const userMessage: ChatMessage = { 
+      role: "user", 
+      content: trimmed, 
+      timestamp: new Date().toISOString() 
+    };
+    const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     
     // Atribuir um emoji aleatório para esta mensagem do usuário
@@ -87,6 +145,12 @@ function HeroWithSearchParams() {
     
     setInput("");
     setLoading(true);
+
+    // 📊 Analytics: Usuário enviou mensagem
+    await trackEvent('user_message_sent', { 
+      messageLength: trimmed.length,
+      messageNumber: newMessages.filter(m => m.role === 'user').length
+    });
 
     try {
       const res = await fetch("/api/chatgpt", {
@@ -100,26 +164,43 @@ function HeroWithSearchParams() {
       const data = await res.json();
       const assistantResponse = data.answer || `Erro: ${data.error || "Erro ao obter resposta."}`;
       
-      const assistantMsg = {
+      const assistantMsg: ChatMessage = {
         role: "assistant",
         content: assistantResponse,
+        timestamp: new Date().toISOString()
       };
 
       const finalMessages = [...newMessages, assistantMsg];
       setMessages(finalMessages);
 
-      // 📤 Enviar pergunta e resposta para o webhook
-      await sendToWebhook(trimmed, assistantResponse);
+      // 📊 Analytics: IA respondeu
+      await trackEvent('assistant_response_received', { 
+        responseLength: assistantResponse.length,
+        messageNumber: finalMessages.filter(m => m.role === 'assistant').length - 1, // -1 para excluir mensagem inicial
+        isError: assistantResponse.includes('Erro:')
+      });
+
+      // 📤 Enviar conversa atualizada (só a cada 3 mensagens para não spammar)
+      if (finalMessages.length % 3 === 0) {
+        await sendConversationToWebhook(finalMessages, 'conversation_milestone');
+      }
 
     } catch (error) {
       const errorMsg = "Erro ao conectar à API.";
-      const assistantMsg = { role: "assistant", content: errorMsg };
+      const assistantMsg: ChatMessage = { 
+        role: "assistant", 
+        content: errorMsg, 
+        timestamp: new Date().toISOString() 
+      };
       
       const finalMessages = [...newMessages, assistantMsg];
       setMessages(finalMessages);
       
-      // 📤 Enviar também em caso de erro
-      await sendToWebhook(trimmed, errorMsg);
+      // 📊 Analytics: Erro na API - CORRIGIDO
+      await trackEvent('api_error', { 
+        error: error instanceof Error ? error.message : String(error),
+        errorType: error instanceof Error ? error.name : 'unknown'
+      });
     } finally {
       setLoading(false);
     }
@@ -131,12 +212,19 @@ function HeroWithSearchParams() {
     }
   }, [messages]);
 
-  const startChat = () => {
+  const startChat = async () => {
     setShowChat(true);
+    // 📊 Analytics: Chat iniciado pelo botão
+    await trackEvent('chat_started', { source: 'hero_button' });
   };
 
-  const restartChat = () => {
-    const newMessages = [
+  const restartChat = async () => {
+    // 📤 Enviar conversa final antes de recomeçar
+    if (messages.length > 1) {
+      await sendConversationToWebhook(messages, 'conversation_restarted');
+    }
+
+    const newMessages: ChatMessage[] = [
       {
         role: "assistant",
         content: `Oi de novo! 🍇 Qual vinho combina com seu momento hoje?
@@ -144,13 +232,22 @@ function HeroWithSearchParams() {
 1. Tô em dúvida entre dois vinhos
 2. Quero uma sugestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
+        timestamp: new Date().toISOString()
       },
     ];
     setMessages(newMessages);
     setShowChat(true);
+
+    // 📊 Analytics: Chat reiniciado
+    await trackEvent('chat_restarted');
   };
 
-  const backToHome = () => {
+  const backToHome = async () => {
+    // 📤 Enviar conversa final antes de sair
+    if (messages.length > 1) {
+      await sendConversationToWebhook(messages, 'conversation_ended');
+    }
+    
     setShowChat(false);
     setMessages([
       {
@@ -160,9 +257,29 @@ function HeroWithSearchParams() {
 1. Tô em dúvida entre dois vinhos
 2. Quero uma sugestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
+        timestamp: new Date().toISOString()
       },
     ]);
+
+    // 📊 Analytics: Usuário saiu do chat
+    await trackEvent('chat_exited', { source: 'back_button' });
   };
+
+  // 📊 Analytics: Rastrear tempo de permanência na página
+  useEffect(() => {
+    const startTime = Date.now();
+    
+    const handleBeforeUnload = async () => {
+      const timeSpent = Date.now() - startTime;
+      await trackEvent('page_exit', { 
+        timeSpentMs: timeSpent,
+        timeSpentMinutes: Math.round(timeSpent / 60000)
+      });
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
 
   if (showChat) {
     return (
