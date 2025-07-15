@@ -231,7 +231,8 @@ function HeroWithSearchParams() {
 
       console.log('📤 Dados sendo enviados para webhook:', webhookData); // ✅ LOG ADICIONADO
 
-      const response = await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
+      // ✅ CORRIGIDO: Removida variável não utilizada
+      await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
