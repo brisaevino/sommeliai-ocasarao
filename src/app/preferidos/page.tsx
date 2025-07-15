@@ -35,25 +35,20 @@ A melhor parte? Você encontra na maioria dos supermercados! Não precisa procur
   {
     id: 2,
     titulo: "Noite italiana com Chianti San Crispino 🇮🇹",
-    data: "12 de Janeiro, 2025",
-    imagem: "/jantar-gaby.jpg",
-    imagemPerfil: "/gaby.jpeg",
+    data: "12 de Julho, 2025",
+    imagem: "/jantar-gaby.jpeg",
+    imagemPerfil: "/gaby-foto.jpg",
     autor: "Gaby Fernandes",
     categoria: "Harmonização",
-    tags: ["Tinto", "Italiano", "Chianti", "Queijos"],
+    tags: ["Tinto", "Italiano", "Chianti", "Burrata"],
     preco: "R$ 89,90",
     linkCompra: "https://amzn.to/4ltBKnD",
     conteudo: `Pessoal, hoje foi dia de testar uma harmonização clássica italiana: burrata cremosa + tomates frescos + Chianti San Crispino! 🇮🇹
 
-O Chianti é um vinho que eu sempre recomendo para quem quer começar a entender a elegância dos tintos italianos.
-
-**O que testei:**
-- Burrata fresca com tomates cereja
-- Bruschetta de tomate com manjericão
-- Burrata com tomates secos e azeite
+O Chianti é um vinho que eu recomendo para quem já gosta de vinhos e quer começar a entender a elegância dos tintos italianos.
 
 **Resultado:**
-PERFEITO em todas! A acidez natural do Chianti cortou perfeitamente a cremosidade da burrata, os taninos sedosos equilibraram com a doçura dos tomates, e aquelas notas de cereja italiana complementaram lindamente a combinação.
+PERFEITO! A acidez natural do Chianti cortou perfeitamente a cremosidade da burrata, os taninos sedosos equilibraram com a doçura dos tomates, e aquelas notas de cereja italiana complementaram lindamente a combinação.
 
 **Características do vinho:**
 - Cor rubi brilhante típica da Toscana
@@ -479,35 +474,7 @@ export default function Preferidos() {
           )}
         </div>
 
-        {/* Newsletter Section */}
-        <div style={{
-          backgroundColor: 'white',
-          padding: '50px 20px',
-          textAlign: 'center',
-          borderTop: '1px solid #f0f0f0'
-        }}>
-          <div style={{ maxWidth: '450px', margin: '0 auto' }}>
-            <h3 style={{
-              color: '#333',
-              fontSize: '1.6rem',
-              fontWeight: '600',
-              marginBottom: '15px'
-            }}>
-              📧 Receba novos posts no seu email
-            </h3>
-            <p style={{
-              color: '#666',
-              marginBottom: '25px',
-              fontSize: '0.95rem',
-              lineHeight: 1.5
-            }}>
-              Seja o primeiro a saber sobre nossas descobertas, harmonizações e posts da comunidade!
-            </p>
-            <NewsletterForm />
-          </div>
-        </div>
-
-        {/* Call to Action - Participação */}
+        {/* ✅ MOVIDO PARA CIMA: Call to Action - Participação */}
         <div style={{
           background: 'linear-gradient(135deg, #f8f6f3 0%, #f0ede8 100%)',
           padding: '50px 20px',
@@ -635,6 +602,34 @@ export default function Preferidos() {
             }}>
               Não precisa ser expert, precisa ser autêntico! 🤗
             </p>
+          </div>
+        </div>
+
+        {/* ✅ MOVIDO PARA O FINAL: Newsletter Section */}
+        <div style={{
+          backgroundColor: 'white',
+          padding: '50px 20px',
+          textAlign: 'center',
+          borderTop: '1px solid #f0f0f0'
+        }}>
+          <div style={{ maxWidth: '450px', margin: '0 auto' }}>
+            <h3 style={{
+              color: '#333',
+              fontSize: '1.6rem',
+              fontWeight: '600',
+              marginBottom: '15px'
+            }}>
+              📧 Receba novos posts no seu email
+            </h3>
+            <p style={{
+              color: '#666',
+              marginBottom: '25px',
+              fontSize: '0.95rem',
+              lineHeight: 1.5
+            }}>
+              Seja o primeiro a saber sobre nossas descobertas, harmonizações e posts da comunidade!
+            </p>
+            <NewsletterForm />
           </div>
         </div>
       </main>
