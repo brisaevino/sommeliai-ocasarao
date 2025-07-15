@@ -33,7 +33,7 @@ function HeroWithSearchParams() {
         content: `Olá! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
 
 1. Tô em dúvida entre dois vinhos
-2. Quero uma sugestão pra uma ocasião especial
+2. Quero uma sugestestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
         timestamp: new Date().toISOString()
       },
@@ -63,7 +63,7 @@ function HeroWithSearchParams() {
     return availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
   };
 
-  // 📊 Função para rastrear eventos - URL ATUALIZADA
+  // 📊 Função para rastrear eventos - SEM WEBHOOK
   const trackEvent = async (eventType: string, data: Record<string, string | number | boolean> = {}) => {
     try {
       const eventData: AnalyticsEvent = {
@@ -77,50 +77,10 @@ function HeroWithSearchParams() {
 
       console.log('📊 Analytics Event:', eventType, eventData);
       
-      // ✅ URL DO WEBHOOK ATUALIZADA
-      await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(eventData)
-      });
+      // ❌ REMOVIDO: Não enviar eventos para webhook
+      // Apenas log local para debug
     } catch (error) {
       console.error('❌ Erro no analytics:', error);
-    }
-  };
-
-  // 📤 Função para enviar conversa completa - URL ATUALIZADA
-  const sendConversationToWebhook = async (conversationMessages: ChatMessage[], eventType: string = 'conversation_update') => {
-    try {
-      const conversationSummary = {
-        sessionId,
-        eventType,
-        sessionStartTime,
-        timestamp: new Date().toISOString(),
-        totalMessages: conversationMessages.length,
-        userMessages: conversationMessages.filter(m => m.role === 'user').length,
-        assistantMessages: conversationMessages.filter(m => m.role === 'assistant').length,
-        sessionDuration: Date.now() - new Date(sessionStartTime).getTime(),
-        lastUserMessage: conversationMessages.filter(m => m.role === 'user').pop()?.content || '',
-        lastAssistantMessage: conversationMessages.filter(m => m.role === 'assistant').pop()?.content || '',
-        userAgent: navigator.userAgent,
-        url: window.location.href,
-        fullConversation: conversationMessages
-      };
-
-      console.log('📤 Enviando conversa completa:', conversationSummary);
-
-      // ✅ URL DO WEBHOOK ATUALIZADA
-      await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(conversationSummary)
-      });
-
-      console.log('✅ Conversa enviada para analytics');
-    } catch (error) {
-      console.error('❌ Erro ao enviar conversa:', error);
     }
   };
 
@@ -146,14 +106,14 @@ function HeroWithSearchParams() {
     setInput("");
     setLoading(true);
 
-    // 📊 Analytics: Usuário enviou mensagem
+    // 📊 Analytics: Apenas log local
     await trackEvent('user_message_sent', { 
       messageLength: trimmed.length,
       messageNumber: newMessages.filter(m => m.role === 'user').length
     });
 
     try {
-      console.log('🚀 Enviando pergunta para API:', trimmed); // ✅ LOG ADICIONADO
+      console.log('🚀 Enviando pergunta para API:', trimmed);
 
       const res = await fetch("/api/chatgpt", {
         method: "POST",
@@ -164,7 +124,7 @@ function HeroWithSearchParams() {
       });
 
       const data = await res.json();
-      console.log('📥 Resposta da API recebida:', data); // ✅ LOG ADICIONADO
+      console.log('📥 Resposta da API recebida:', data);
       
       const assistantResponse = data.answer || `Erro: ${data.error || "Erro ao obter resposta."}`;
       
@@ -180,20 +140,22 @@ function HeroWithSearchParams() {
       console.log('📤 Enviando para webhook:', { 
         pergunta: trimmed, 
         resposta: assistantResponse 
-      }); // ✅ LOG ADICIONADO
+      });
 
-      // 📤 Enviar pergunta e resposta APÓS receber a resposta
+      // ✅ WEBHOOK APENAS AQUI - quando há pergunta + resposta real
       await sendToWebhook(trimmed, assistantResponse);
 
-      // 📊 Analytics: IA respondeu
+      // 📊 Analytics: Apenas log local
       await trackEvent('assistant_response_received', { 
         responseLength: assistantResponse.length,
         messageNumber: finalMessages.filter(m => m.role === 'assistant').length - 1,
         isError: assistantResponse.includes('Erro:')
       });
 
+      // ❌ REMOVIDO: sendConversationToWebhook a cada 3 mensagens
+
     } catch (error) {
-      console.error('❌ Erro na API:', error); // ✅ LOG ADICIONADO
+      console.error('❌ Erro na API:', error);
       
       const errorMsg = "Erro ao conectar à API.";
       const assistantMsg: ChatMessage = { 
@@ -205,9 +167,10 @@ function HeroWithSearchParams() {
       const finalMessages = [...newMessages, assistantMsg];
       setMessages(finalMessages);
       
-      // 📤 Enviar erro também
+      // ✅ WEBHOOK APENAS AQUI - quando há erro real
       await sendToWebhook(trimmed, errorMsg);
       
+      // 📊 Analytics: Apenas log local
       await trackEvent('api_error', { 
         error: error instanceof Error ? error.message : String(error),
         errorType: error instanceof Error ? error.name : 'unknown'
@@ -217,54 +180,15 @@ function HeroWithSearchParams() {
     }
   }
 
-  // 📤 Função simplificada para enviar só pergunta e resposta
-  const sendToWebhook = async (userMessage: string, assistantResponse: string) => {
-    try {
-      const webhookData = {
-        sessionId,
-        timestamp: new Date().toISOString(),
-        pergunta: userMessage,
-        resposta: assistantResponse,
-        userAgent: navigator.userAgent,
-        url: window.location.href
-      };
-
-      console.log('📤 Dados sendo enviados para webhook:', webhookData); // ✅ LOG ADICIONADO
-
-      // ✅ CORRIGIDO: Removida variável não utilizada
-      await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(webhookData)
-      });
-
-      console.log('✅ Webhook enviado com sucesso'); // ✅ LOG ADICIONADO
-    } catch (error) {
-      console.error('❌ Erro ao enviar webhook:', error); // ✅ LOG ADICIONADO
-    }
-  };
-
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-
   const startChat = async () => {
     setShowChat(true);
-    // 📊 Analytics: Chat iniciado pelo botão
-    await trackEvent('chat_started', { source: 'hero_button' });
+    // ❌ REMOVIDO: trackEvent que enviava para webhook
+    console.log('📊 Chat iniciado via botão');
   };
 
   const restartChat = async () => {
-    // 📤 Enviar conversa final antes de recomeçar
-    if (messages.length > 1) {
-      await sendConversationToWebhook(messages, 'conversation_restarted');
-    }
-
+    // ❌ REMOVIDO: sendConversationToWebhook
+    
     const newMessages: ChatMessage[] = [
       {
         role: "assistant",
@@ -279,15 +203,12 @@ function HeroWithSearchParams() {
     setMessages(newMessages);
     setShowChat(true);
 
-    // 📊 Analytics: Chat reiniciado
-    await trackEvent('chat_restarted');
+    // ❌ REMOVIDO: trackEvent que enviava para webhook
+    console.log('📊 Chat reiniciado');
   };
 
   const backToHome = async () => {
-    // 📤 Enviar conversa final antes de sair
-    if (messages.length > 1) {
-      await sendConversationToWebhook(messages, 'conversation_ended');
-    }
+    // ❌ REMOVIDO: sendConversationToWebhook
     
     setShowChat(false);
     setMessages([
@@ -302,25 +223,46 @@ function HeroWithSearchParams() {
       },
     ]);
 
-    // 📊 Analytics: Usuário saiu do chat
-    await trackEvent('chat_exited', { source: 'back_button' });
+    // ❌ REMOVIDO: trackEvent que enviava para webhook
+    console.log('📊 Usuário saiu do chat');
   };
 
-  // 📊 Analytics: Rastrear tempo de permanência na página
-  useEffect(() => {
-    const startTime = Date.now();
-    
-    const handleBeforeUnload = async () => {
-      const timeSpent = Date.now() - startTime;
-      await trackEvent('page_exit', { 
-        timeSpentMs: timeSpent,
-        timeSpentMinutes: Math.round(timeSpent / 60000)
-      });
-    };
+  // ❌ REMOVIDO: useEffect de beforeunload que enviava para webhook
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, []);
+  // ✅ MANTIDO: Apenas a função que envia pergunta + resposta
+  const sendToWebhook = async (userMessage: string, assistantResponse: string) => {
+    try {
+      const webhookData = {
+        sessionId,
+        timestamp: new Date().toISOString(),
+        pergunta: userMessage,
+        resposta: assistantResponse,
+        userAgent: navigator.userAgent,
+        url: window.location.href
+      };
+
+      console.log('📤 Dados sendo enviados para webhook:', webhookData);
+
+      await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData)
+      });
+
+      console.log('✅ Webhook enviado com sucesso');
+    } catch (error) {
+      console.error('❌ Erro ao enviar webhook:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   if (showChat) {
     return (
@@ -334,7 +276,7 @@ function HeroWithSearchParams() {
           <div className="flex items-center justify-between max-w-4xl mx-auto">
             <div className="flex items-center space-x-3">
               <button
-                onClick={backToHome}
+                onClick={() => setShowChat(false)}
                 className="group flex items-center space-x-2 transition-colors"
                 style={{ color: '#d9a441' }}
               >
