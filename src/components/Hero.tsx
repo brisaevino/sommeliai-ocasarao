@@ -63,7 +63,7 @@ function HeroWithSearchParams() {
     return availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
   };
 
-  // 📊 Função para rastrear eventos - CORRIGIDO
+  // 📊 Função para rastrear eventos - URL ATUALIZADA
   const trackEvent = async (eventType: string, data: Record<string, string | number | boolean> = {}) => {
     try {
       const eventData: AnalyticsEvent = {
@@ -77,8 +77,8 @@ function HeroWithSearchParams() {
 
       console.log('📊 Analytics Event:', eventType, eventData);
       
-      // Enviar evento para Google Apps Script
-      await fetch('https://script.google.com/macros/s/AKfycbzkCHa5FgdbahGdg-Hr_RYfHglpLEQJW4Lb-GjnIOn8DGWAZQZ6heI1BfGQwg2f73_0/exec', {
+      // ✅ URL DO WEBHOOK ATUALIZADA
+      await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
@@ -89,7 +89,7 @@ function HeroWithSearchParams() {
     }
   };
 
-  // 📤 Função para enviar conversa completa - CORRIGIDO
+  // 📤 Função para enviar conversa completa - URL ATUALIZADA
   const sendConversationToWebhook = async (conversationMessages: ChatMessage[], eventType: string = 'conversation_update') => {
     try {
       const conversationSummary = {
@@ -110,7 +110,8 @@ function HeroWithSearchParams() {
 
       console.log('📤 Enviando conversa completa:', conversationSummary);
 
-      await fetch('https://script.google.com/macros/s/AKfycbzkCHa5FgdbahGdg-Hr_RYfHglpLEQJW4Lb-GjnIOn8DGWAZQZ6heI1BfGQwg2f73_0/exec', {
+      // ✅ URL DO WEBHOOK ATUALIZADA
+      await fetch('https://script.google.com/macros/s/AKfycby5UEJtm86jx1Yh6LQ7HEhcUAI464H3zjmPpPoamfJjrgD7XowxLyAK-ELDe5l64JgK/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
