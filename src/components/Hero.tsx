@@ -276,7 +276,7 @@ function HeroWithSearchParams() {
           <div className="flex items-center justify-between max-w-4xl mx-auto">
             <div className="flex items-center space-x-3">
               <button
-                onClick={() => setShowChat(false)}
+                onClick={backToHome} // ✅ CORRIGIDO: usar a função backToHome
                 className="group flex items-center space-x-2 transition-colors"
                 style={{ color: '#d9a441' }}
               >
