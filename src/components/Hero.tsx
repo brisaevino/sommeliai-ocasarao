@@ -43,7 +43,6 @@ function HeroWithSearchParams() {
   const [showChat, setShowChat] = useState(false);
   const [userEmojis, setUserEmojis] = useState<{[key: number]: string}>({});
   const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
-  const [sessionStartTime] = useState(() => new Date().toISOString());
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Verificar se deve abrir chat automaticamente
