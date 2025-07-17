@@ -36,7 +36,7 @@ A melhor parte? Você encontra na maioria dos supermercados! Não precisa procur
     id: 2,
     titulo: "Noite italiana com Chianti San Crispino 🇮🇹",
     data: "12 de Julho, 2025",
-    imagem: "/jantar-gaby.jpeg",
+    imagem: "/jantar-gaby.jpg",
     imagemPerfil: "/gaby-foto.jpg",
     autor: "Gaby Fernandes",
     categoria: "Harmonização",
@@ -509,7 +509,7 @@ export default function Preferidos() {
               marginBottom: '25px'
             }}>
               <a 
-                href="https://instagram.com/sommeliai" 
+                href="https://instagram.com/_sommeliai" 
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -538,7 +538,7 @@ export default function Preferidos() {
               </a>
               
               <a 
-                href="mailto:participe@sommeliai.com" 
+                href="mailto:brisaevino@gmail.com" 
                 style={{
                   backgroundColor: '#d9a441',
                   color: 'white',

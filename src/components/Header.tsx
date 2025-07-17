@@ -56,7 +56,7 @@ export default function Header() {
             maxWidth: '280px'
           }}
         >
-          Teste o chat
+          TESTE O CHAT!
         </Link>
       </div>
     </header>

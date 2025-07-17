@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SommelierAI - Sua Sommelier de Vinhos Inteligente",
-  description: "Descubra vinhos perfeitos com a ajuda da inteligência artificial. Sommelier especializada em harmonização e seleção de vinhos.",
+  title: "SommeliAI - Seu Sommelier de Vinhps Inteligente",
+  description: "Descubra o vinho perfeito para cada ocasião com a ajuda da inteligência artificial",
+  icons: {
+    icon: '/favicon', // ✅ trocado para o favicon da pasta public
+  },
 };
 
 export default function RootLayout({

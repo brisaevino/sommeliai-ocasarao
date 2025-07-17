@@ -20,7 +20,7 @@ interface Pergunta {
 // Tipos de vinho com suas características
 const tiposVinho = {
   espumante: {
-    titulo: "🥂 Espumante – A Alegria da Festa",
+    titulo: "🥂 Espumante - A Alegria da Festa",
     vinho: "Espumante Brut ou Prosecco",
     descricao: "Você é aquela pessoa que levanta o clima só de estar presente. Leve, vibrante, espontâneo. As pessoas te procuram quando precisam de risada, leveza ou só uma desculpa pra celebrar.",
     caracteristicas: [
@@ -35,7 +35,7 @@ const tiposVinho = {
     emoji: "🥂"
   },
   pinot_noir: {
-    titulo: "🍷 Pinot Noir – O Conselheiro Acolhedor", 
+    titulo: "🍷 Pinot Noir - O Conselheiro Acolhedor", 
     vinho: "Pinot Noir",
     descricao: "Você tem profundidade sem fazer alarde. Tem quem te veja quieto, mas quem te conhece sabe: seu mundo interior é vasto, acolhedor e atento.",
     caracteristicas: [
@@ -50,7 +50,7 @@ const tiposVinho = {
     emoji: "🍷"
   },
   malbec: {
-    titulo: "🔥 Malbec – O Sincero e Debochado",
+    titulo: "🔥 Malbec - O Sincero e Debochado",
     vinho: "Malbec Argentino",
     descricao: "Você é intensidade com personalidade. Não tem paciência pra joguinho nem pra meias palavras. É direto, ácido quando precisa, e hilário (especialmente quando não se esforça pra ser).",
     caracteristicas: [
@@ -65,7 +65,7 @@ const tiposVinho = {
     emoji: "🔥"
   },
   rose: {
-    titulo: "🌸 Rosé – Moderno e Leve",
+    titulo: "🌸 Rosé - Moderno e Leve",
     vinho: "Rosé Provençal",
     descricao: "Você flui com charme. Tem estética, leveza, e um pé na simplicidade. Curte dias bonitos, gente interessante e conversas que não precisem provar nada.",
     caracteristicas: [
@@ -95,12 +95,12 @@ const perguntas: Pergunta[] = [
   },
   {
     id: 2,
-    pergunta: "Sua resposta favorita para &quot;tá tudo bem?&quot;",
+    pergunta: "Sua resposta favorita para \"tá tudo bem?\"",
     opcoes: [
-      { texto: "&quot;Tudo ótimo, e você? Vamos comemorar?&quot;", tipo: "espumante", pontos: 3 },
-      { texto: "&quot;Mais ou menos… mas você quer conversar sobre isso?&quot;", tipo: "pinot_noir", pontos: 3 },
-      { texto: "&quot;Não, mas também não tô com paciência hoje.&quot;", tipo: "malbec", pontos: 3 },
-      { texto: "&quot;Tô vivendo. No meu ritmo. Tá bom assim.&quot;", tipo: "rose", pontos: 3 }
+      { texto: "Tudo ótimo, e você? Vamos comemorar?", tipo: "espumante", pontos: 3 },
+      { texto: "Mais ou menos… mas você quer conversar sobre isso?", tipo: "pinot_noir", pontos: 3 },
+      { texto: "Não, mas também não tô com paciência hoje.", tipo: "malbec", pontos: 3 },
+      { texto: "Tô vivendo. No meu ritmo. Tá bom assim.", tipo: "rose", pontos: 3 }
     ]
   },
   {
@@ -567,6 +567,35 @@ export default function Quiz() {
                   </button>
                 ))}
               </div>
+
+              {/* Botão Voltar */}
+              {perguntaAtual > 0 && (
+                <button
+                  onClick={() => {
+                    setPerguntaAtual(perguntaAtual - 1);
+                  }}
+                  style={{
+                    marginTop: '30px',
+                    backgroundColor: '#f8f6f3',
+                    color: '#7a2e1e',
+                    padding: '12px 28px',
+                    borderRadius: '15px',
+                    border: '2px solid #d9a441',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f0e3c1';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f8f6f3';
+                  }}
+                >
+                  ← Voltar
+                </button>
+              )}
             </div>
           </div>
         )}
