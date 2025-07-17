@@ -39,25 +39,33 @@ export default function Header() {
         }} style={{ width: '100%', maxWidth: '280px' }}>
           <span className="button-text">QUIZ DE PERSONALIDADE</span>
         </button>
-        {/* Botão "Teste o chat" com estilo amarelo/dourado especial */}
-        <Link 
-          href="/?chat=true" 
-          className="px-4 py-2 text-sm font-medium rounded-full transition-all hover:scale-105"
+        <button
+          className="button modern-button"
+          onClick={() => {
+            window.location.href = '/?chat=true';
+          }}
           style={{
-            background: 'linear-gradient(135deg, #d9a441 0%, #c9932a 100%)',
-            color: 'white',
-            boxShadow: '0 2px 8px rgba(217, 164, 65, 0.3)',
-            textDecoration: 'none',
-            minHeight: '40px',
+            width: '100%',
+            maxWidth: '280px',
+            background: '#d9a441',
+            color: '#fff',
+            padding: '12px 24px', // igual aos outros botões
+            borderRadius: '12px',
+            fontWeight: '600',    // igual aos outros botões
+            fontSize: '1rem',     // igual aos outros botões
+            border: 'none',
+            boxShadow: '0 2px 8px rgba(217,164,65,0.08)',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '100%',
-            maxWidth: '280px'
+            textDecoration: 'none',
+            marginLeft: 0
           }}
         >
-          TESTE O CHAT!
-        </Link>
+          <span style={{ fontWeight: '600' }}>Teste o chat</span>
+        </button>
       </div>
     </header>
   );

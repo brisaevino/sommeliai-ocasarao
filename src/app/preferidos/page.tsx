@@ -420,39 +420,65 @@ export default function Preferidos() {
                   alignItems: 'center',
                   backgroundColor: '#fafbfc'
                 }}>
-                  <a 
-                    href={post.linkCompra}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      backgroundColor: post.isParticipacao ? '#7a2e1e' : '#d9a441',
-                      color: 'white',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
-                      textDecoration: 'none',
-                      fontSize: '0.85rem',
-                      fontWeight: '600',
-                      transition: 'all 0.2s ease',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = post.isParticipacao ? '#5a1f14' : '#c9932a';
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = post.isParticipacao ? '#7a2e1e' : '#d9a441';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                    onClick={post.isParticipacao ? (e) => {
-                      e.preventDefault();
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                      // Aqui você pode adicionar lógica para abrir um modal ou redirecionar
-                    } : undefined}
-                  >
-                    {post.isParticipacao ? '📸 Enviar Review' : '🛒 Compre pela Amazon'}
-                  </a>
+                  {post.isParticipacao ? (
+                    <a
+                      href="https://instagram.com/_sommeliai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        backgroundColor: '#7a2e1e',
+                        color: 'white',
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        textDecoration: 'none',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
+                        transition: 'all 0.2s ease',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#5a1f14';
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = '#7a2e1e';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      📸 Enviar review
+                    </a>
+                  ) : (
+                    <a
+                      href={post.linkCompra}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        backgroundColor: '#d9a441',
+                        color: 'white',
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        textDecoration: 'none',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
+                        transition: 'all 0.2s ease',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#c9932a';
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = '#d9a441';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      🛒 Compre pela Amazon
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
@@ -541,7 +567,7 @@ export default function Preferidos() {
                 href="mailto:brisaevino@gmail.com" 
                 style={{
                   backgroundColor: '#d9a441',
-                  color: 'white',
+                  color: '#fff',
                   padding: '12px 24px',
                   borderRadius: '25px',
                   textDecoration: 'none',
@@ -554,14 +580,14 @@ export default function Preferidos() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#c9932a';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = '#d9a441';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                ✉️ Email
+                ✉️ Entre em contato
               </a>
               
               <button
