@@ -26,16 +26,34 @@ export default function Header() {
       }}>
         <button className="button modern-button" onClick={() => {
           window.location.href = '/';
+          if (typeof window !== "undefined" && window.gtag) {
+            window.gtag('event', 'click_header_home', {
+              event_category: 'Header',
+              event_label: 'Página Inicial'
+            });
+          }
         }} style={{ width: '100%', maxWidth: '280px' }}>
           <span className="button-text">Página Inicial</span>
         </button>
         <button className="button modern-button" onClick={() => {
           window.location.href = '/preferidos';
+          if (typeof window !== "undefined" && window.gtag) {
+            window.gtag('event', 'click_header_preferidos', {
+              event_category: 'Header',
+              event_label: 'Nossos Preferidos'
+            });
+          }
         }} style={{ width: '100%', maxWidth: '280px' }}>
           <span className="button-text">Nossos Preferidos</span>
         </button>
         <button className="button modern-button" onClick={() => {
           window.location.href = '/quiz';
+          if (typeof window !== "undefined" && window.gtag) {
+            window.gtag('event', 'click_header_quiz', {
+              event_category: 'Header',
+              event_label: 'Quiz de Personalidade'
+            });
+          }
         }} style={{ width: '100%', maxWidth: '280px' }}>
           <span className="button-text">QUIZ DE PERSONALIDADE</span>
         </button>
@@ -43,6 +61,12 @@ export default function Header() {
           className="button modern-button"
           onClick={() => {
             window.location.href = '/?chat=true';
+            if (typeof window !== "undefined" && window.gtag) {
+              window.gtag('event', 'click_header_chat', {
+                event_category: 'Header',
+                event_label: 'Teste o Chat'
+              });
+            }
           }}
           style={{
             width: '100%',
@@ -64,7 +88,7 @@ export default function Header() {
             marginLeft: 0
           }}
         >
-          <span style={{ fontWeight: '600' }}>Teste o chat</span>
+          <span style={{ fontWeight: '600' }}>TESTE O CHAT!</span>
         </button>
       </div>
     </header>
