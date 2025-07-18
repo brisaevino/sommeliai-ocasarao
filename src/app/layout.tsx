@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SommeliAI - Seu Sommelier de Vinhps Inteligente",
+  title: "SommeliAI - Seu Sommelier de Vinhos Inteligente",
   description: "Descubra o vinho perfeito para cada ocasião com a ajuda da inteligência artificial",
   icons: {
     icon: '/favicon', // ✅ trocado para o favicon da pasta public
@@ -30,6 +31,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-QKKQF64KX1"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-QKKQF64KX1');
+        `}
+        </Script>
         {children}
       </body>
     </html>
