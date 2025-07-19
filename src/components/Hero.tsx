@@ -30,10 +30,9 @@ function HeroWithSearchParams() {
     [
       {
         role: "assistant",
-        content: `Olá! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
-
+        content: `Olá! Bem vindo(a) ao Casarão! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
 1. Tô em dúvida entre dois vinhos
-2. Quero uma sugestestão pra uma ocasião especial
+2. Quero uma sugestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
         timestamp: new Date().toISOString()
       },
@@ -191,8 +190,7 @@ function HeroWithSearchParams() {
     const newMessages: ChatMessage[] = [
       {
         role: "assistant",
-        content: `Oi de novo! 🍇 Qual vinho combina com seu momento hoje?
-
+        content: `Olá! Bem vindo(a) ao Casarão! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
 1. Tô em dúvida entre dois vinhos
 2. Quero uma sugestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
@@ -213,8 +211,7 @@ function HeroWithSearchParams() {
     setMessages([
       {
         role: "assistant",
-        content: `Olá! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
-
+        content: `Olá! Bem vindo(a) ao Casarão! Sou o SommeliAI — posso te ajudar a escolher o vinho ideal. Me conta o que você procura!
 1. Tô em dúvida entre dois vinhos
 2. Quero uma sugestão pra uma ocasião especial
 3. Quero um vinho que combine com o prato que eu escolhi`,
@@ -297,7 +294,7 @@ function HeroWithSearchParams() {
               <div className="w-px h-6" style={{ backgroundColor: '#d9a441' }} />
               <div className="flex items-center">
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold" style={{ color: '#7a2e1e' }}>SommeliAI</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold" style={{ color: '#7a2e1e' }}>SommeliAI + Casarão Lavras</h3>
                   <p className="text-sm" style={{ color: '#7a2e1e' }}>Seu sommelier digital</p>
                 </div>
               </div>
@@ -340,7 +337,7 @@ function HeroWithSearchParams() {
                 {msg.role === "user" ? (userEmojis[i] || "😊") : (
                   <img
                     src="/bot-avatar.png"
-                    alt="SommeliAI"
+                    alt="SommeliAI + Casarão Lavras"
                     className="w-full h-full object-cover rounded-full"
                   />
                 )}
@@ -475,8 +472,8 @@ function HeroWithSearchParams() {
             Descubra o vinho perfeito para <span style={{ color: '#d9a441' }}>cada momento</span>
           </h1>
           <p className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed" style={{ color: '#7a2e1e' }}>
-            SommeliAI é seu sommelier digital que entende suas preferências e te guia para escolher o vinho certo. 
-            Harmonizações perfeitas, recomendações personalizadas e muito mais!
+            O Casarão está te proporcionando uma experiência única: escolha o vinho perfeito com o SommeliAI + Casarão Lavras, seu sommelier digital que entende suas preferências. 
+            Harmonizações perfeitas, recomendações personalizadas e muito mais! 
           </p>
           <div className="flex justify-center">
             <button 
@@ -489,7 +486,7 @@ function HeroWithSearchParams() {
                 alt="Chat"
                 className="w-6 h-6"
               />
-              Converse com o SommeliAI
+              Converse com o SommeliAI + Casarão Lavras
             </button>
           </div>
         </div>
@@ -709,7 +706,7 @@ export default function Hero() {
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f3edea' }}>
         <div className="text-center">
-          <div className="text-2xl font-bold mb-4" style={{ color: '#7a2e1e' }}>SommeliAI</div>
+          <div className="text-2xl font-bold mb-4" style={{ color: '#7a2e1e' }}>SommeliAI + Casarão Lavras</div>
           <div className="text-sm" style={{ color: 'rgba(122, 46, 30, 0.7)' }}>Carregando...</div>
         </div>
       </div>

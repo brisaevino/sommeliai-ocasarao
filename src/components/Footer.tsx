@@ -21,7 +21,7 @@ export default function Footer() {
       }}
     >
       <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 6 }}>
-        SommeliAI
+        SommeliAI + Casarão Lavras
       </div>
       <div style={{ fontSize: 15, color: "#6d4c41", marginBottom: 12 }}>
         Sua experiência com vinhos, mais inteligente e divertida.
@@ -31,7 +31,7 @@ export default function Footer() {
           href="https://instagram.com/_sommeliai"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Instagram SommeliAI"
+          aria-label="Instagram SommeliAI + Casarão Lavras"
           style={{ display: 'inline-flex', alignItems: 'center', color: '#7a2e1e', textDecoration: 'none', fontWeight: 600, fontSize: 15 }}
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7a2e1e" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>
@@ -43,7 +43,7 @@ export default function Footer() {
         </a>
       </div>
       <div style={{ fontSize: 13, color: "#b85c1e", marginTop: 18 }}>
-        © {new Date().getFullYear()} SommeliAI. Todos os direitos reservados.
+        © {new Date().getFullYear()} SommeliAI + Casarão Lavras. Todos os direitos reservados.
       </div>
     </footer>
   );
