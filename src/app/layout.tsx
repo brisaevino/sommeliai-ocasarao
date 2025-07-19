@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SommeliAI - Seu Sommelier de Vinhos Inteligente",
+  title: "SommeliAI + Casarão Lavras",
   description: "Descubra o vinho perfeito para cada ocasião com a ajuda da inteligência artificial",
   icons: {
     icon: '/favicon', // ✅ trocado para o favicon da pasta public
